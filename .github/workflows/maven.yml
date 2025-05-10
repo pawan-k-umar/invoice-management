@@ -9,8 +9,9 @@ on:
       - integration
 
 permissions:
-  contents: read
-  packages: write
+  permissions:
+    contents: write
+    security-events: write
 
 jobs:
   build:
