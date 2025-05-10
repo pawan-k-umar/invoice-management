@@ -1,12 +1,12 @@
-name: Java CI with Maven
+name: Integration
 
 on:
   push:
     branches:
-      - main
+      - integration
   pull_request:
     branches:
-      - main
+      - integration
 
 permissions:
   contents: read
