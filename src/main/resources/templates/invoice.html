@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Invoice - <span th:text="${invoiceNumber}">Invoice Number</span></title>
+    <style>
+        body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          color: #2c3e50;
+          background-color: #f6f9fc;
+        }
+
+        .invoice-box {
+          background: #ffffff;
+          max-width: 800px;
+          margin: 40px auto;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          color: #34495e;
+          margin-bottom: 10px;
+        }
+
+        .invoice-header,
+        .invoice-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .company {
+          text-align: right;
+        }
+
+        .info {
+          margin: 20px 0;
+        }
+
+        .info strong {
+          display: inline-block;
+          width: 150px;
+          color: #2c3e50;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 30px;
+        }
+
+        table th {
+          background-color: #3498db;
+          color: #ffffff;
+          padding: 12px;
+          text-align: left;
+        }
+
+        table td {
+          padding: 12px;
+          border-bottom: 1px solid #ecf0f1;
+        }
+
+        .totals {
+          margin-top: 20px;
+          float: right;
+          text-align: right;
+        }
+
+        .totals p {
+          margin: 0;
+          font-size: 14px;
+        }
+
+        .totals p span {
+          display: inline-block;
+          width: 120px;
+        }
+
+        .grand-total {
+          font-size: 18px;
+          font-weight: bold;
+          color: #e74c3c;
+        }
+
+        .footer {
+          margin-top: 60px;
+          font-size: 12px;
+          color: #7f8c8d;
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="invoice-box">
+    <div class="invoice-header">
+        <div>
+            <h1>Invoice</h1>
+            <p><strong>Invoice #:</strong> <span th:text="${invoiceNumber}">Invoice Number</span></p>
+            <p><strong>Date:</strong> <span th:text="${invoiceDate}">Date</span></p>
+        </div>
+        <div class="company">
+            <h2><span th:text="${companyName}"></span></h2>
+            <p><span th:text="${companyEmail}"></span></p>
+            <p><span th:text="${companyAddress}"></span></p>
+        </div>
+    </div>
+
+    <div class="info">
+        <p><strong>Customer Name:</strong> <span th:text="${customerName}">Customer Name</span></p>
+        <p><strong>Customer Email:</strong> <span th:text="${customerEmail}">Customer Email</span></p>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><span th:text="${itemDescription}">Item Description</span></td>
+            <td>$<span th:text="${itemPrice}">Item Price</span></td>
+            <td><span th:text="${itemQuantity}">Item Quantity</span></td>
+            <td>$<span th:text="${itemSubtotal}">Item Subtotal</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <p><span th:text="'Tax (' + ${taxRate} + '%)'">Tax $</span> <span th:text="${taxAmount}">Total Tax</span>
+        </p>
+        <p class="grand-total">Totals $<span th:text="${totalAmount}">Total Amount</span></p>
+    </div>
+
+    <div class="footer">
+        <p>Thank you for your business!</p>
+    </div>
+</div>
+</body>
+</html>
