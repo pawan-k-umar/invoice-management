@@ -9,9 +9,8 @@ on:
       - integration
 
 permissions:
-  permissions:
-    contents: write
-    security-events: write
+  contents: write
+  security-events: write
 
 jobs:
   build:
@@ -30,7 +29,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      # - name: Submit Maven dependency graph
-      #   uses: advanced-security/maven-dependency-submission-action@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Submit Maven dependency graph
+#        uses: advanced-security/maven-dependency-submission-action@v1
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
