@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Invoice Generator</title>
+    <style>
+        body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          background-color: #f6f9fc;
+          margin: 0;
+          padding: 40px 0;
+        }
+
+        .form-container {
+          max-width: 700px;
+          background-color: #fff;
+          margin: auto;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          text-align: center;
+          color: #2c3e50;
+          margin-bottom: 30px;
+        }
+
+        .form-group {
+          margin-bottom: 20px;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 600;
+          color: #34495e;
+        }
+
+        input {
+          width: 100%;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
+
+        .summary {
+          padding: 20px;
+          background-color: #f0f4f8;
+          border-radius: 6px;
+          margin-top: 30px;
+        }
+
+        .summary h3 {
+          margin-bottom: 20px;
+          color: #2c3e50;
+        }
+
+        .summary .form-group {
+          margin-bottom: 15px;
+        }
+
+        button {
+          width: 100%;
+          background-color: #3498db;
+          color: #fff;
+          padding: 14px;
+          font-size: 16px;
+          font-weight: bold;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin-top: 30px;
+        }
+
+        button:hover {
+          background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>Invoice Generator</h1>
+    <form action="/generate-invoice" method="POST">
+        <div class="form-group">
+            <label for="invoiceNumber">Invoice Number</label>
+            <input id="invoiceNumber" name="invoiceNumber" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="invoiceDate">Invoice Date</label>
+            <input id="invoiceDate" name="invoiceDate" required type="date"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyName">Your Company Name</label>
+            <input id="companyName" name="companyName" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyName">Your Company Email</label>
+            <input id="companyName" name="companyEmail" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="companyName">Your Company Address</label>
+            <input id="companyName" name="companyAddress" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="customerName">Customer Name</label>
+            <input id="customerName" name="customerName" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="customerEmail">Customer Email</label>
+            <input id="customerEmail" name="customerEmail" required type="email"/>
+        </div>
+
+        <div class="form-group">
+            <label for="itemDescription">Item Description</label>
+            <input id="itemDescription" name="itemDescription" required type="text"/>
+        </div>
+
+        <div class="form-group">
+            <label for="itemPrice">Item Price ($)</label>
+            <input id="itemPrice" name="itemPrice" required step="0.01" type="number"/>
+        </div>
+
+        <div class="form-group">
+            <label for="itemQuantity">Item Quantity</label>
+            <input id="itemQuantity" name="itemQuantity" required type="number"/>
+        </div>
+
+        <div class="summary">
+            <h3>Summary</h3>
+
+            <div class="form-group">
+                <label for="taxRate">Tax Rate (%)</label>
+                <input id="taxRate" name="taxRate" required step="0.01" type="number"/>
+            </div>
+
+            <div class="form-group">
+                <label for="subtotal">Subtotal ($)</label>
+                <input id="subtotal" name="itemSubtotal" readonly type="number"/>
+            </div>
+
+            <div class="form-group">
+                <label for="taxAmount">Tax Amount ($)</label>
+                <input id="taxAmount" name="taxAmount" readonly type="number"/>
+            </div>
+
+            <div class="form-group">
+                <label for="totalAmount">Total Amount ($)</label>
+                <input id="totalAmount" name="totalAmount" readonly type="number"/>
+            </div>
+        </div>
+
+        <button type="submit">Generate Invoice</button>
+    </form>
+</div>
+
+<script>
+    const priceInput = document.getElementById("itemPrice");
+    const quantityInput = document.getElementById("itemQuantity");
+    const taxRateInput = document.getElementById("taxRate");
+    const subtotalInput = document.getElementById("subtotal");
+    const taxAmountInput = document.getElementById("taxAmount");
+    const totalAmountInput = document.getElementById("totalAmount");
+
+    function calculateInvoice() {
+      const price = parseFloat(priceInput.value) || 0;
+      const qty = parseInt(quantityInput.value) || 0;
+      const taxRate = parseFloat(taxRateInput.value) || 0;
+
+      const subtotal = price * qty;
+      const taxAmount = subtotal * (taxRate / 100);
+      const total = subtotal + taxAmount;
+
+      subtotalInput.value = subtotal.toFixed(2);
+      taxAmountInput.value = taxAmount.toFixed(2);
+      totalAmountInput.value = total.toFixed(2);
+    }
+
+    priceInput.addEventListener("input", calculateInvoice);
+    quantityInput.addEventListener("input", calculateInvoice);
+    taxRateInput.addEventListener("input", calculateInvoice);
+</script>
+</body>
+</html>
