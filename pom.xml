@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>invoice-managment</artifactId>
+    <artifactId>invoice-management</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>invoice-management</name>
     <description>Invoice Management</description>
