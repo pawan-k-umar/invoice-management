@@ -19,7 +19,10 @@ RUN ./mvnw clean install -DskipTests
 COPY src src
 
 # Step 7: Build the application (this step will re-run only when there are changes in your source files)
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw package -DskipTests
+
+# Check if the JAR exists
+RUN ls -al /app/target
 
 # Step 8: Create a new image for running the app (production stage)
 FROM eclipse-temurin:21-jdk AS runtime
@@ -28,10 +31,10 @@ FROM eclipse-temurin:21-jdk AS runtime
 WORKDIR /app
 
 # Step 10: Copy the built JAR file from the build image to the runtime image
-COPY --from=build /app/target/your-app.jar /app/your-app.jar
+COPY --from=build /app/target/invoice-management-0.0.1-SNAPSHOT.jar /app/invoice-management.jar
 
 # Step 11: Expose the port your app runs on (use the actual port if different)
 EXPOSE 8080
 
 # Step 12: Define the command to run the JAR file
-CMD ["java", "-jar", "your-app.jar"]
+CMD ["java", "-jar", "invoice-management.jar"]
