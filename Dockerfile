@@ -43,6 +43,6 @@
 
 #========================================= After YT Video =========================================
 FROM openjdk:21
-EXPOSE 8080
+EXPOSE 9091
 ADD target/invoice-management.jar invoice-management.jar
 ENTRYPOINT ["java", "-jar", "/invoice-management.jar"]
