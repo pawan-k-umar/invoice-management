@@ -5,7 +5,6 @@ import com.invoice.management.service.PdfService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,11 +16,6 @@ public class InvoiceController {
 
     @Autowired
     private PdfService pdfService;
-
-    @GetMapping("/")
-    public String getInvoice() {
-        return "Invoice Management App";  // Returns the front-end UI
-    }
 
     @RequestMapping("/invoice-form")
     public String showForm() {

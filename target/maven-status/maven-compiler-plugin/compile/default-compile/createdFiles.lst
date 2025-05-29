@@ -1,6 +1,7 @@
 com/invoice/management/setup/package-info.class
 com/invoice/management/service/PdfService.class
 com/invoice/management/controller/InvoiceController.class
+com/invoice/management/controller/HealthCheckController.class
 com/invoice/management/service/package-info.class
 com/invoice/management/setup/InvoiceManagementApplication.class
 com/invoice/management/controller/package-info.class
