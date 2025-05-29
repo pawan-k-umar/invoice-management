@@ -16,7 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>invoice-management</name>
     <description>Invoice Management</description>
-    <packaging>war</packaging>
+    <!--    <packaging>war</packaging>-->
 
     <!-- Java Version -->
     <properties>
