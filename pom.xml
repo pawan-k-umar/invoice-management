@@ -16,10 +16,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>invoice-management</name>
     <description>Invoice Management</description>
+    <packaging>war</packaging>
 
     <!-- Java Version -->
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
@@ -92,9 +93,8 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
+        <finalName>invoice-management</finalName>
     </build>
 
 </project>
