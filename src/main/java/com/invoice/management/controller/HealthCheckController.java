@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HealthCheckController {
-    @GetMapping("/")
+    @GetMapping("/health-check")
     public String getInvoice() {
-        return "Invoice Management App";  // Returns the front-end UI
+        return "Invoice Management App is Up and Running";  // Returns the front-end UI
     }
 }

@@ -33,15 +33,16 @@ pipeline {
                 sh """
                     echo "🔍 Checking if Docker is installed and running..."
 
-                    if ! command -v ${DOCKER} &> /dev/null; then
-                      echo "❌ Docker is not installed. Please install Docker Desktop for Mac."
-                      exit 1
+                    if ! command -v ${DOCKER} >/dev/null 2>&1; then
+                        echo "❌ Docker is not installed. Please install Docker on Ubuntu."
+                        exit 1
                     fi
 
-                    if ! ${DOCKER} info > /dev/null 2>&1; then
-                      echo "❌ Docker is installed but not running. Please start Docker Desktop manually."
-                      exit 1
+                    if ! ${DOCKER} info >/dev/null 2>&1; then
+                        echo "❌ Docker is installed but the daemon is not running. Please start the Docker service."
+                        exit 1
                     fi
+
 
                     echo "✅ Docker is running. Proceeding to build and run the container..."
 
