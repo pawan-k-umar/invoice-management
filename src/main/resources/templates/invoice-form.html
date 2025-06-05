@@ -40,16 +40,18 @@
         input {
           width: 100%;
           padding: 10px;
-          border-radius: 6px;
+          border-radius: 8px;
           border: 1px solid #ccc;
           font-size: 14px;
+          box-sizing: border-box;
         }
 
         .summary {
           padding: 20px;
-          background-color: #f0f4f8;
-          border-radius: 6px;
+          background-color: #f8fbfd;
+          border-radius: 8px;
           margin-top: 30px;
+          box-shadow: inset 0 0 0 1px #e3e8ee;
         }
 
         .summary h3 {
@@ -69,7 +71,7 @@
           font-size: 16px;
           font-weight: bold;
           border: none;
-          border-radius: 6px;
+          border-radius: 8px;
           cursor: pointer;
           transition: background-color 0.3s ease;
           margin-top: 30px;
@@ -77,6 +79,17 @@
 
         button:hover {
           background-color: #2980b9;
+        }
+
+        /* Optional UX improvement: Remove number spinners */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        input[type="number"] {
+          -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -100,13 +113,13 @@
         </div>
 
         <div class="form-group">
-            <label for="companyName">Your Company Email</label>
-            <input id="companyName" name="companyEmail" required type="text"/>
+            <label for="companyEmail">Your Company Email</label>
+            <input id="companyEmail" name="companyEmail" required type="email"/>
         </div>
 
         <div class="form-group">
-            <label for="companyName">Your Company Address</label>
-            <input id="companyName" name="companyAddress" required type="text"/>
+            <label for="companyAddress">Your Company Address</label>
+            <input id="companyAddress" name="companyAddress" required type="text"/>
         </div>
 
         <div class="form-group">

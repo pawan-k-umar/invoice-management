@@ -17,15 +17,20 @@ public class InvoiceController {
     @Autowired
     private PdfService pdfService;
 
+    @RequestMapping("/")
+    public String showHome() {
+        return "home";  // Returns the front-end UI
+    }
+
     @RequestMapping("/invoice-form")
     public String showForm() {
         return "invoice-form";  // Returns the front-end UI
     }
 
     @PostMapping("/generate-invoice")
-    public void generateInvoice(@RequestParam Map<String, Object> formData, HttpServletResponse response) throws Exception {
+    public void generateInvoice(@RequestParam Map<String, Object> formData, HttpServletResponse response) throws com.lowagie.text.DocumentException, java.io.IOException {
 
-        var pdfBytes = pdfService.generatePdfFromForm(formData, "invoice");
+        var pdfBytes = pdfService.generatePdfFromForm(formData, "generate-invoice");
 
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
