@@ -28,6 +28,41 @@ pipeline {
             }
         }
 
+        stage('Ensure Docker Group Access') {
+            steps {
+                sh '''
+                    echo "🔐 Adding Jenkins user to Docker group..."
+                    if id -nG jenkins | grep -qw docker; then
+                        echo "✅ Jenkins user is already in the Docker group."
+                    else
+                        sudo usermod -aG docker jenkins
+                        echo "🔁 Restarting Jenkins for group changes to take effect..."
+                        sudo systemctl restart jenkins
+                        echo "⚠️ Jenkins restarted — please re-run the job after this stage completes."
+                        exit 1
+                    fi
+                '''
+            }
+        }
+
+        stage('Check Docker') {
+            steps {
+                sh '''
+                    if ! command -v docker >/dev/null 2>&1; then
+                        echo "❌ Docker is not installed."
+                        exit 1
+                    fi
+
+                    if ! systemctl is-active --quiet docker; then
+                        echo "⚙️ Starting Docker service..."
+                        sudo systemctl start docker
+                    fi
+
+                    docker info
+                '''
+            }
+        }
+
         stage('Docker Build') {
             steps {
                 sh """
