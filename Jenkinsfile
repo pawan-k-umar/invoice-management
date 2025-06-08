@@ -28,23 +28,6 @@ pipeline {
             }
         }
 
-        stage('Ensure Docker Group Access') {
-            steps {
-                sh '''
-                    echo "🔐 Adding Jenkins user to Docker group..."
-                    if id -nG jenkins | grep -qw docker; then
-                        echo "✅ Jenkins user is already in the Docker group."
-                    else
-                        sudo usermod -aG docker jenkins
-                        echo "🔁 Restarting Jenkins for group changes to take effect..."
-                        sudo systemctl restart jenkins
-                        echo "⚠️ Jenkins restarted — please re-run the job after this stage completes."
-                        exit 1
-                    fi
-                '''
-            }
-        }
-
         stage('Check Docker') {
             steps {
                 sh '''
