@@ -42,7 +42,17 @@
 
 
 #========================================= After YT Video =========================================
+# FROM openjdk:21
+# EXPOSE 9091
+# ADD target/invoice-management.jar invoice-management.jar
+# ENTRYPOINT ["java", "-jar", "/invoice-management.jar"]
+
+
+#========================================= For remote debugging =========================================
 FROM openjdk:21
-EXPOSE 9091
+# Expose application port and debug port
+EXPOSE 9091 5005
+# Add the JAR file to the image
 ADD target/invoice-management.jar invoice-management.jar
-ENTRYPOINT ["java", "-jar", "/invoice-management.jar"]
+# Run with debug options enabled
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/invoice-management.jar"]
