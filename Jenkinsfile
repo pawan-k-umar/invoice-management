@@ -6,6 +6,7 @@ pipeline {
         string(name: 'DOCKER_TAG', defaultValue: '0.0.1-SNAPSHOT', description: 'Docker image tag')
         string(name: 'HOST_PORT', defaultValue: '9091', description: 'Host port to expose')
         string(name: 'CONTAINER_PORT', defaultValue: '9091', description: 'Container port the app listens on')
+        booleanParam(name: 'DEBUG_ENABLED', defaultValue: false, description: 'Run application in remote debug mode')
     }
 
     environment {
@@ -35,12 +36,10 @@ pipeline {
                         echo "❌ Docker is not installed."
                         exit 1
                     fi
-
                     if ! systemctl is-active --quiet docker; then
                         echo "⚙️ Starting Docker service..."
                         sudo systemctl start docker
                     fi
-
                     docker info
                 '''
             }
@@ -73,13 +72,23 @@ pipeline {
             }
         }
 
-         stage('Docker Run') {
+        stage('Docker Run') {
             steps {
-                sh """
-                  ${DOCKER} run -d -p ${params.HOST_PORT}:${params.CONTAINER_PORT} --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${params.DOCKER_TAG}
-                  echo "🚀 Deployment successful. App should be available at http://localhost:${params.HOST_PORT}"
-                """
+                script {
+                    def runCommand = """
+                        ${DOCKER} run -d \
+                        -p ${params.HOST_PORT}:${params.CONTAINER_PORT} \
+                        ${params.DEBUG_ENABLED ? "-p 5005:5005" : ""} \
+                        --name ${CONTAINER_NAME} \
+                        -e DEBUG_ENABLED=${params.DEBUG_ENABLED} \
+                        ${DOCKER_IMAGE}:${params.DOCKER_TAG}
+                    """
+
+                    sh runCommand
+
+                    echo "✅ App running at http://localhost:${params.HOST_PORT}${params.DEBUG_ENABLED ? " and debuggable on port 5005" : ""}"
+                }
             }
-         }
+        }
     }
 }
