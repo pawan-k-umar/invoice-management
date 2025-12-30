@@ -49,7 +49,7 @@
 
 
 #========================================= For remote debugging =========================================
-FROM openjdk:21
+FROM eclipse-temurin:21-jdk
 # Expose application port and debug port
 EXPOSE 9091 5005
 # Add the JAR file to the image
